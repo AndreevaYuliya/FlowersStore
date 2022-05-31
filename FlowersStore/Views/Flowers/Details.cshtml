@@ -1,0 +1,90 @@
+﻿@model FlowersStore.Models.Flower
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Flower</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type.type_of_flowers)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type.type_of_flowers)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flower_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flower_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_supplier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_supplier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Markup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Markup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actual_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actual_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Picture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flower_size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flower_size)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

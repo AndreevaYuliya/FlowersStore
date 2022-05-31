@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FlowersStore.Models.Bouquet>
+
+@{
+    ViewBag.Title = "Букети";
+}
+
+<h2>Букети</h2>
+
+@foreach (var b in Model)
+{
+    <div class="well">
+        <h3>
+            <strong>@b.Bouquet_name</strong>
+            <span class="pull-right label label-primary">@b.Price.ToString("# грн")</span>
+        </h3>
+        <p class="button">
+            @Html.ActionLink("Add to cart", "Index",
+            "ShoppingCart", new { id = b.Id }, "")
+        </p>
+    </div>
+
+    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <li>@Html.ActionLink("Create New", "Create", new { id = b.Id })</li>
+        <li>@Html.ActionLink("Edit", "Edit", new { id = b.Id }) </li>
+        <li>@Html.ActionLink("Details", "Details", new { id = b.Id })</li>
+        <li>@Html.ActionLink("Delete", "Delete", new { id = b.Id })</li>
+        
+        
+        }
+
+    
+}
+
+
+
