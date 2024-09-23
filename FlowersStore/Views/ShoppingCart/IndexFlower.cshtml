@@ -1,0 +1,58 @@
+﻿@model IEnumerable<FlowersStore.Models.Flower>
+
+
+<h2 class="wow fadeInUp">Your Cart</h2>
+
+
+@if (TempData["cart"] != null)
+{
+    <table class="table table-responsive table-bordered">
+
+        @*Table Headings*@
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Фото</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Загальна ціна</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in TempData["cart"] as List<FlowersStore.Models.Cart>)
+            {
+
+                <tr>
+                    <td>@item.FlowerName</td>
+                    <td>@Url.Content("~/Content/Images/Flowers/" + item.Picture)</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.FlowerPrice</td>
+
+                    <td>@item.Bill</td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td align="right" class="text-danger"><h3>Total sum: @TempData["total"]</h3></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <a id="btn_add" href="@Url.Action("Index", "Flowers")" class="btn btn-info btn-lg" style="margin-left:60px">
+        <span class="glyphicon"></span> Continue shopping
+    </a>
+
+}
+else
+{
+    <h3 style="color:red"> Cart is empty....</h3>
+    <a id="btn_add" href="@Url.Action("Index", "Flowers")" class="btn btn-info btn-lg" style="margin-left:60px">
+        <span class="glyphicon"></span> Continue shopping
+    </a>
+}

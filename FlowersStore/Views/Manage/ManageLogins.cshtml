@@ -29,15 +29,17 @@
                         <tr>
                             <td>@account.LoginProvider</td>
                             <td>
-                                @if ((bool)ViewData["ShowRemoveButton"])
+                                @if (ViewBag.ShowRemoveButton)
                                 {
-                                    <form asp-controller="Manage" asp-action="RemoveLogin" method="post" class="form-horizontal">
+                                    using (Html.BeginForm("RemoveLogin", "Manage"))
+                                    {
+                                        @Html.AntiForgeryToken()
                                         <div>
-                                            <input asp-for="@account.LoginProvider" name="LoginProvider" type="hidden" />
-                                            <input asp-for="@account.ProviderKey" name="ProviderKey" type="hidden" />
-                                            <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
+                                            @Html.Hidden("loginProvider", account.LoginProvider)
+                                            @Html.Hidden("providerKey", account.ProviderKey)
+                                            <input type="submit" class="btn btn-default" value="Удалить" title="Удалить это имя входа @account.LoginProvider из вашей учетной записи" />
                                         </div>
-                                    </form>
+                                    }
                                 }
                                 else
                                 {

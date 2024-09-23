@@ -1,8 +1,8 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FlowersStore.Models
 {
@@ -41,7 +41,7 @@ namespace FlowersStore.Models
 
         public DbSet<ApplicationRole> IdentityRoles { get; set; }
 
-      //  public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        //  public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public DbSet<EditUserViewModel> EditUserViewModels { get; set; }
         public DbSet<Cart> Carts { get; set; }

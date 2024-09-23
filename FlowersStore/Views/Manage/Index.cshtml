@@ -75,5 +75,18 @@
                 }
             }
         </dd>
+
+        <dt>Remove account</dt>
+        <dd>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Remove", "RemoveLogin")
+                </div>
+            }
+        </dd>
     </dl>
 </div>

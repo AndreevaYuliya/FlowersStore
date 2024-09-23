@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FlowersStore.Models.Flower>
+﻿
+@model IEnumerable<FlowersStore.Models.Flower>
 
 @{
     ViewBag.Title = "Квіти";
@@ -7,115 +8,37 @@
 <h2>Квіти</h2>
 
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Type.type_of_flowers)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Flower_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Id_supplier)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Markup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Account_number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Actual_quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Picture)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Flower_size)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.type_of_flowers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flower_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_supplier)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Markup)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account_number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Actual_quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flower_size)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
-</table>
-
-<script type="text/javascript">
-    function Add(f) {
-        var Id = $(f).attr("itemid");
-        alert(Id);
-    }
-</script>
-
 @foreach (var f in Model)
 {
-    <div class="well">
-        <h3>
-            <strong>@f.Flower_name</strong>
-            <span class="pull-right label label-primary">@f.Price.ToString("# грн")</span>
-        </h3>
-        @using (Html.BeginForm("Index", "ShoppingCart", new { flowerId = f.Id }))
-        {
-            <div class="pull-right">
+<div class="well row" style=" margin-top: 30px">
 
-                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                <input type="submit" class="btn btn-success" value="Додати до кошику" itemid="@f.Id" onclick="Add(this)" />
-            </div>
-        }
-        <p class="button">
-            @Html.ActionLink("Add to cart", "Index",
-            "ShoppingCart", new { id = f.Id }, "")
-        </p>
+    <div class="col-sm-4 col-xs-12">
+        <h3><strong>@f.Flower_name</strong></h3>
 
-        <p>
-            @Html.ActionLink("Order Now", "Index", "ShoppingCart", new { id = f.Id }, new { @class = "btn btn-default" })
-        </p>
-
-
+        <img class="img img-responsive cimg" src="@Url.Content("~/Content/Images/Flowers/" + f.PictureType)"
+             width="100" height="100" border-radius:50px 50px 50px 50px" />
     </div>
+
+    <div class="col-sm-8 col-xs-12 pull-right">
+        <a><h3><strong class="pull-right label label-primary">@f.Price.ToString("# грн")</strong> </h3></a>
+    </div>
+
+    <div class="col-sm-6 col-xs-10 pull-right"  >
+        <a id="btn_add" href="@Url.Action("Details", "Flowers", new { id=f.Id })"
+           class="btn btn-primary btn-lg pull-right" style="margin-top: 10%">
+            <span class="glyphicon"></span>Деталі
+        </a>
+    </div>
+        
+
+    <div class="col-sm-4 col-xs-12 pull-right">
+        <a id="btn_add" href="@Url.Action("AddFlower", "ShoppingCart", new { id=f.Id })"
+           class="btn btn-info btn-lg pull-right" style="margin-top:10%">
+            <span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart
+        </a>
+    </div>   
+</div>
+
 
     if (Request.IsAuthenticated && User.IsInRole("Admin"))
     {
@@ -125,3 +48,9 @@
         <li>@Html.ActionLink("Delete", "Delete", new { id = f.Id })</li>
     }
 }
+
+<div>
+    <a id="btn_add" href="@Url.Action("Index", "Flowers")" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-eye-open"></span> Continue shopping
+    </a>
+</div>

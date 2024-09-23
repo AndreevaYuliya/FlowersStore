@@ -33,8 +33,9 @@ namespace FlowersStore.Models
 
         public int Actual_quantity { get; set; }
 
-        [Column(TypeName = "image")]
         public byte[] Picture { get; set; }
+
+        public string PictureType { get; set; }
 
         public int Flower_size { get; set; }
 

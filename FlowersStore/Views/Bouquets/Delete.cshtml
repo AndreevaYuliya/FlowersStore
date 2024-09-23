@@ -72,7 +72,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Picture)
+            <img class="img img-responsive cimg" src="@Url.Content("~/Content/Images/Bouquets/" + Model.PictureType)"
+                 width="150" height="150" border-radius:50px 50px 50px 50px" />
         </dd>
 
     </dl>

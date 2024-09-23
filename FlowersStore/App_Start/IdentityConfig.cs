@@ -1,21 +1,21 @@
-﻿using System;
-using System.Data.Entity;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using FlowersStore.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using FlowersStore.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System;
 using System.Configuration;
+using System.Data.Entity;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
-using System.Diagnostics;
 
 namespace FlowersStore
 {
@@ -70,7 +70,7 @@ namespace FlowersStore
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Настройка логики проверки имен пользователей
@@ -111,7 +111,7 @@ namespace FlowersStore
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = 
+                manager.UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;

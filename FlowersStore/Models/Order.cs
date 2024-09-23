@@ -45,6 +45,6 @@ namespace FlowersStore.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ordered_services> ordered_services { get; set; }
-        public List<Order> Items;  
+        public List<Order> Items;
     }
 }

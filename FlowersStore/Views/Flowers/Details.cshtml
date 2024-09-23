@@ -1,90 +1,59 @@
-﻿@model FlowersStore.Models.Flower
+﻿
+
+
+@model IEnumerable<FlowersStore.Models.Flower>
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Квіти";
 }
 
-<h2>Details</h2>
+<h2>Квіти</h2>
+
+
+@foreach (var f in Model)
+{
+    <div class="well row" style=" margin-top: 30px">
+
+        <div class="col-sm-4 col-xs-12">
+            <h3><strong>@f.Flower_name</strong></h3>
+
+            <img class="img img-responsive cimg" src="@Url.Content("~/Content/Images/Flowers/" + f.PictureType)"
+                 width="100" height="100" border-radius:50px 50px 50px 50px" />
+
+
+            <a id="btn_add" href="@Url.Action("Details", "Flowers", new { id=f.Id })"
+               class="btn btn-primary btn-lg" style="margin-left: 290%">
+                <span class="glyphicon"></span>Деталі
+            </a>
+
+            <a id="btn_add" href="@Url.Action("AddFlower", "ShoppingCart", new { id=f.Id })"
+               class="btn btn-info btn-lg " style="margin-left: 270%; margin-top:10%">
+                <span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart
+            </a>
+
+
+
+
+
+        </div>
+
+        <div class="col-sm-4 col-xs-12 pull-right">
+            <h3><strong class="pull-right label label-primary">@f.Price.ToString("# грн")</strong> </h3>
+        </div>
+    </div>
+
+
+    if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <li>@Html.ActionLink("Create New", "Create", new { id = f.Id })</li>
+        <li>@Html.ActionLink("Edit", "Edit", new { id = f.Id }) </li>
+        <li>@Html.ActionLink("Details", "Details", new { id = f.Id })</li>
+        <li>@Html.ActionLink("Delete", "Delete", new { id = f.Id })</li>
+    }
+}
 
 <div>
-    <h4>Flower</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Type.type_of_flowers)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Type.type_of_flowers)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Flower_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Flower_name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Id_supplier)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Id_supplier)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Markup)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Markup)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Account_number)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Account_number)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Actual_quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Actual_quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Flower_size)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Flower_size)
-        </dd>
-
-    </dl>
+    <a id="btn_add" href="@Url.Action("Index", "Flowers")" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-eye-open"></span> Continue shopping
+    </a>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

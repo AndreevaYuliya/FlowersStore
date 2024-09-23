@@ -1,231 +1,129 @@
-﻿using FlowersStore.Models;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using FlowersStore.Models;
 
 namespace FlowersStore.Controllers
 {
     public class ShoppingCartController : Controller
     {
         FlowersStoreDB db = new FlowersStoreDB();
-        private List<Cart> carts;
 
-        public ActionResult Index()
+        List<Cart> li = new List<Cart>();
+    
+        public ActionResult IndexFlower()
         {
-            List<Cart> carts = (from cart in db.Carts
-                                       join
-                                       flowers in db.Flowers
-                                       on cart.FlowerId equals flowers.Id
-                                       select new
-                                       {
-                                           FlowerName = flowers.Flower_name,
-                                           FlowerPrice = flowers.Price,
-                                           Quantity = cart.Quantity
-                                       }
-                                       ).AsEnumerable().Select(fl => new Cart
-                                       {
-                                           FlowerName = fl.FlowerName,
-                                           FlowerPrice = fl.FlowerPrice,
-                                           Quantity = fl.Quantity
-                                       }).ToList();
-            return View(carts);
-
-
-
-           // return View(db.Carts.ToList());
-        }
-
-        public ActionResult Add()
-        {
-            Cart carts = new Cart();
-
-            var item = (from cart in db.Carts
-                                       join
-                                       flowers in db.Flowers
-                                       on cart.FlowerId equals flowers.Id
-                                       select new
-                                       {
-                                           FlowerName = flowers.Flower_name,
-                                           FlowerPrice = flowers.Price,
-                                           Quantity = cart.Quantity
-                                       }
-                                       ).AsEnumerable().Select(fl => new Cart
-                                       {
-                                           FlowerName = fl.FlowerName,
-                                           FlowerPrice = fl.FlowerPrice,
-                                           Quantity = fl.Quantity
-                                       });
-            carts = (Cart)item;
-            db.Carts.Add(carts);
-
-            return View(carts);
-      
-        }
-        
-     
-        
-
-
-
-
-
-        // GET: ShoppingCart
-
-        /*
-        public ActionResult Index()
-        {
-            ShoppingCart cart = (ShoppingCart)Session["ShoppingCart"];
-            if (cart == null)
+            if (TempData["cart"] != null)
             {
-                cart = new ShoppingCart();
-                Session["ShoppingCart"] = cart;
-            }
-            return View(cart);
-        }
-      
-        public ActionResult CreateOrUpdate(CartViewModel value)
-        {
-            ShoppingCart cart = (ShoppingCart)Session["ShoppingCart"];
-            if (cart == null)
-            {
-                cart = new ShoppingCart();
-                Session["ShoppingCart"] = cart;
-            }   
-            
-            {
-                Flower flower = db.Flowers.Find(value.Id);
-                if (flower != null)
+                float x = 0;
+                List<Cart> li2 = TempData["cart"] as List<Cart>;
+                foreach (var item in li2)
                 {
-                    if (value.Quantity == 0)
-                    {
-                        cart.AddItem(value.Id, flower);
-                    }
-                    else
-                    {
-                        cart.SetItemQuantity(value.Id, value.Quantity, flower);
-                    }
+                    x += item.Bill;
                 }
+
+                TempData["total"] = x;
             }
+            TempData.Keep();
 
-            Session["CartCount"] = cart.GetItems().Count();
-            return View("Index", cart);
-        }
-        
-
-        */
-
-
-
-
-
-        /*
-
-        // GET: Shop
-        public async Task<ActionResult> Index()
-        {
-            return View(await db.Flowers.ToListAsync());
+            return View(db.Flowers.OrderByDescending(x => x.Id).ToList());
         }
 
-        public ActionResult Cart()
+        public ActionResult AddFlower(int? id)
         {
-            return View();
+            Flower flower = db.Flowers.Where(x => x.Id == id).SingleOrDefault();
+            return View(flower);
         }
 
-        public async Task<ActionResult> AddInCart(Cart id)
+
+        [HttpPost]
+        public ActionResult AddFlower(int quantity, int id)
         {
-           // var cart = ShoppingCart.GetCart(this.HttpContext);
-            if (id == null)
+            Flower flower = db.Flowers.Where(x => x.Id == id).SingleOrDefault();
+
+            Cart cart = new Cart();
+            cart.FlowerName = flower.Flower_name;
+            cart.FlowerPrice = flower.Price;
+            cart.Quantity = quantity;
+            cart.Bill = (float)(cart.FlowerPrice * cart.Quantity);
+
+            if (TempData["cart"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                li.Add(cart);
+                TempData["cart"] = li;
+                Session["count"] = 1;
             }
-            Flower flower = await db.Flowers.FindAsync(id);
-            if (flower == null)
+            else
             {
-                return HttpNotFound();
+                List<Cart> li2 = TempData["cart"] as List<Cart>;
+                li2.Add(cart);
+                TempData["cart"] = li2;
+                Session["count"] = Convert.ToInt32(Session["count"]) + 1;
             }
-            db.Carts.Add(id);   
-            db.SaveChanges();
-            return RedirectToAction("Index", "Flowers", flower);
+
+            TempData.Keep();
+
+            return RedirectToAction("Index");
         }
 
-*/
-
-
-
-
-
-        /*
-        FlowersStoreDB storeDB = new FlowersStoreDB();
-        //
-        // GET: /ShoppingCart/
         public ActionResult Index()
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-
-            // Set up our ViewModel
-            var viewModel = new ShoppingCartViewModel
+            if (TempData["cart"] != null)
             {
-                CartItems = cart.GetCartItems(),
-                CartTotal = cart.GetTotal()
-            };
-            // Return the view
-            return View(viewModel);
+                float x = 0;
+                List<Cart> li2 = TempData["cart"] as List<Cart>;
+                foreach (var item in li2)
+                {
+                    x += item.Bill;
+                }
+
+                TempData["total"] = x;
+            }
+            TempData.Keep();
+
+            List<Flower> flowers = db.Flowers.OrderByDescending(c => c.Id).ToList();
+            List<Bouquet> bouquets = db.Bouquets.OrderByDescending(c => c.Id).ToList();
+
+           
+              return View(Tuple.Create(flowers, bouquets));
         }
-        //
-        // GET: /Store/AddToCart/5
-        public ActionResult AddToCartFlower(int? flowerId)
-        { 
-            
-            // Retrieve the album from the database     
-            var addedFlower = storeDB.Flowers
-                .FirstOrDefault(flower => flower.Id == flowerId);
 
-            // Add it to the shopping cart
-            var cart = ShoppingCart.GetCart(this.HttpContext);
-
-            cart.AddToCartFlower(addedFlower);
-
-            // Go back to the main store page for more shopping
-            return RedirectToAction("Index");
-            
+        public ActionResult AddBouquet(int? id)
+        {
+            Bouquet bouquet = db.Bouquets.Where(x => x.Id == id).SingleOrDefault();
+            return View(bouquet);
         }
-        //
-        // AJAX: /ShoppingCart/RemoveFromCart/5
+
         [HttpPost]
-        public ActionResult RemoveFromCart(int flowerId)
+        public ActionResult AddBouquet(int quantity, int id)
         {
-            // Remove the item from the cart
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            Bouquet bouquet = db.Bouquets.Where(x => x.Id == id).SingleOrDefault();
 
-            // Get the name of the album to display confirmation
-            string flowerName = storeDB.Carts
-                .Single(item => item.RecordId == flowerId).Flower.Flower_name;
+            Cart cart = new Cart();
 
-            // Remove from cart
-            int itemCount = cart.RemoveFromCart(flowerId);
+            cart.BouquetName = bouquet.Bouquet_name;
+            cart.BouquetPrice = bouquet.Price;
+            cart.Quantity = quantity;
+            cart.Bill = (float)(cart.BouquetPrice * cart.Quantity);
 
-            // Display the confirmation message
-            var results = new ShoppingCartRemoveViewModel
+            if (TempData["cart"] == null)
             {
-                Message = Server.HtmlEncode(flowerName) +
-                    " has been removed from your shopping cart.",
-                CartTotal = cart.GetTotal(),
-                CartCount = cart.GetCount(),
-                ItemCount = itemCount,
-                DeleteId = flowerId
-            };
-            return Json(results);
-        }
-        //
-        // GET: /ShoppingCart/CartSummary
-        [ChildActionOnly]
-        public ActionResult CartSummary()
-        {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+                li.Add(cart);
+                TempData["cart"] = li;
+                Session["count"] = 1;
+            }
+            else
+            {
+                List<Cart> li2 = TempData["cart"] as List<Cart>;
+                li2.Add(cart);
+                TempData["cart"] = li2;
+                Session["count"] = Convert.ToInt32(Session["count"]) + 1;
+            }
+            TempData.Keep();
 
-            ViewData["CartCount"] = cart.GetCount();
-            return PartialView("CartSummary");
+            return RedirectToAction("Index");
         }
-          */
     }
 }

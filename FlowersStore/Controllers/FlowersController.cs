@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FlowersStore.Models;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FlowersStore.Models;
 
 namespace FlowersStore.Controllers
 {
@@ -14,10 +11,19 @@ namespace FlowersStore.Controllers
     {
         private FlowersStoreDB db = new FlowersStoreDB();
 
+        public Flower Flower
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         // GET: Flowers
         public ActionResult Index()
         {
-            return View(db.Flowers.ToList());
+            var flowers = db.Flowers.Include(f => f.Type);
+            return View(flowers.ToList());
         }
 
         // GET: Flowers/Details/5
@@ -38,7 +44,7 @@ namespace FlowersStore.Controllers
         // GET: Flowers/Create
         public ActionResult Create()
         {
-            ViewBag.id_type = new SelectList(db.Types, "id", "type_of_flowers");
+            ViewBag.Id_type = new SelectList(db.Types, "id", "type_of_flowers");
             return View();
         }
 
@@ -47,7 +53,7 @@ namespace FlowersStore.Controllers
         // Дополнительные сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,id_type,flower_name,price,id_supplier,markup,account_number,actual_quantity,picture,flower_size")] Flower flower)
+        public ActionResult Create([Bind(Include = "Id,Id_type,Flower_name,Price,Id_supplier,Markup,Account_number,Actual_quantity,Picture,Flower_size")] Flower flower)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +62,7 @@ namespace FlowersStore.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
+            ViewBag.Id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
             return View(flower);
         }
 
@@ -72,7 +78,7 @@ namespace FlowersStore.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
+            ViewBag.Id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
             return View(flower);
         }
 
@@ -81,7 +87,7 @@ namespace FlowersStore.Controllers
         // Дополнительные сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,id_type,flower_name,price,id_supplier,markup,account_number,actual_quantity,picture,flower_size")] Flower flower)
+        public ActionResult Edit([Bind(Include = "Id,Id_type,Flower_name,Price,Id_supplier,Markup,Account_number,Actual_quantity,Picture,Flower_size, PictureType")] Flower flower)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +95,7 @@ namespace FlowersStore.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
+            ViewBag.Id_type = new SelectList(db.Types, "id", "type_of_flowers", flower.Id_type);
             return View(flower);
         }
 
@@ -119,12 +125,20 @@ namespace FlowersStore.Controllers
             return RedirectToAction("Index");
         }
 
-        public List<Flower> getAllFlowers()
+        public FileContentResult GetImage(int flowerId)
         {
-            return db.Flowers.ToList();
+            Flower flower = db.Flowers.Where(x => x.Id == flowerId)
+                .FirstOrDefault(f => f.Id == flowerId);
+
+            if (flower != null)
+            {
+                return File(flower.Picture, flower.PictureType);
+            }
+            else
+            {
+                return null;
+            }
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

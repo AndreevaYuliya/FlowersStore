@@ -165,7 +165,7 @@ namespace FlowersStore.Models
                 .HasMany(e => e.flowers)
                 .WithRequired(e => e.Type)
                 .HasForeignKey(e => e.Id_type)
-                .WillCascadeOnDelete(false);           
-        }     
+                .WillCascadeOnDelete(false);
+        }
     }
 }

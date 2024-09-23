@@ -1,0 +1,66 @@
+﻿@model FlowersStore.Models.Supply
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Supply</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.bouquet.Bouquet_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bouquet.Bouquet_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.flower.Flower_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.flower.Flower_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.supplier.supplier_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.supplier.supplier_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_supply)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_supply)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

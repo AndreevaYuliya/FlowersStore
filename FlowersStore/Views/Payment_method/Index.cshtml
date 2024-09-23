@@ -1,0 +1,39 @@
+﻿@model IEnumerable<FlowersStore.Models.Payment_method>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.customer.surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.payment_method1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.customer.surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.payment_method1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_customer }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_customer }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_customer })
+        </td>
+    </tr>
+}
+
+</table>

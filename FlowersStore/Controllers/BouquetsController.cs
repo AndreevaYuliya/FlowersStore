@@ -1,14 +1,20 @@
-﻿using System.Data.Entity;
+﻿using FlowersStore.Models;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using FlowersStore.Models;
 
 namespace FlowersStore.Controllers
 {
     public class BouquetsController : Controller
     {
         private FlowersStoreDB db = new FlowersStoreDB();
+
+        public Bouquet Bouquet
+        {
+            get => default;
+            set { }
+        }
 
         // GET: Bouquets
         public ActionResult Index()
@@ -50,7 +56,6 @@ namespace FlowersStore.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(bouquet);
         }
 
@@ -110,7 +115,6 @@ namespace FlowersStore.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {

@@ -1,0 +1,82 @@
+﻿@model FlowersStore.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery.delivery_method)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery.delivery_method)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Registration_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Registration_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delivery_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delivery_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

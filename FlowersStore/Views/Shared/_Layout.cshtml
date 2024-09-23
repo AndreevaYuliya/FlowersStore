@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - приложение ASP.NET</title>
@@ -21,33 +21,48 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Головна сторінка", "Index", "Bouquets", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
             </div>
             <div class="navbar-collapse collapse">
+                <img class="navbar-left" src="~/Content/Images/Logo3.png" height="5%" width="15%" />
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Головна сторінка", "Index", "Flowers")</li>
+                    <li>@Html.ActionLink("Про нас", "About", "Home")</li>
+                    <li>@Html.ActionLink("Контакти", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Bouquets", "Index", "Bouquets")</li>
+                    <li>@Html.ActionLink("Flowers", "Index", "Flowers")</li>
 
-                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                    }
+                    <li class="active">
+                        <a href="@Url.Action("Index", "ShoppingCart")" class="btn btn-info btn-lg" style="">
+                            <span class="glyphicon glyphicon-shopping-cart" style="color:green">@Session["count"]</span>
+                        </a>
+                    </li>
+                    <li>@Html.Partial("_LoginPartial")</li>
+
                 </ul>
-                @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </div>
 
-    <div class="row panel">
-        <div class="col-xs-3">
-            <button>@Html.ActionLink("Bouquets", "Index", "Bouquets")</button>
-            <button>@Html.ActionLink("Flowers", "Index", "Flowers")</button>
-            
+    @*   @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+    *@
+    <div class=" alert-info">
+        <div class="container">
+            <div class="">
+                <ul class="nav navbar-nav">
+
+                    <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+                    <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+
+                </ul>
+            </div>
         </div>
     </div>
-
+    @* }*@
     <div class="container body-content">
         @RenderBody()
         <hr />

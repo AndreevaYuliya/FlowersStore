@@ -37,6 +37,8 @@ namespace FlowersStore.Models
 
         public byte[] Picture { get; set; }
 
+        public string PictureType { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ordered> Ordereds { get; set; }
 

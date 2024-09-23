@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace FlowersStore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
     {
         public RolesAdminController()

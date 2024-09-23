@@ -1,0 +1,74 @@
+﻿@model FlowersStore.Models.Ordered
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ordered</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bouquet.Bouquet_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bouquet.Bouquet_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flower.Flower_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flower.Flower_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Customer_city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.Customer_city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit_priceFlower)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit_priceFlower)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit_priceBouquet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit_priceBouquet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Flower_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Flower_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bouquet_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bouquet_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

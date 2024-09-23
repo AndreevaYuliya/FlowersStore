@@ -8,28 +8,48 @@
 
 @foreach (var b in Model)
 {
-    <div class="well">
-        <h3>
-            <strong>@b.Bouquet_name</strong>
-            <span class="pull-right label label-primary">@b.Price.ToString("# грн")</span>
-        </h3>
-        <p class="button">
-            @Html.ActionLink("Add to cart", "Index",
-            "ShoppingCart", new { id = b.Id }, "")
-        </p>
+    <div class="well row" style=" margin-top: 30px">
+
+        <div class="col-sm-4 col-xs-12">
+            <h3><strong>@b.Bouquet_name</strong></h3>
+
+            <img class="img img-responsive cimg" src="@Url.Content("~/Content/Images/Bouquets/" + b.PictureType)"
+                 width="150" height="150" border-radius:50px 50px 50px 50px" />
+        </div>
+
+        <div class="col-sm-8 col-xs-12 pull-right">
+            <a><h3><strong class="pull-right label label-primary">@b.Price.ToString("# грн")</strong> </h3></a>
+        </div>
+
+        <div class="col-sm-6 col-xs-10 pull-right">
+            <a href="@Url.Action("Details", "Bouquets", new { id=b.Id })"
+               class="btn btn-primary btn-lg pull-right" style="margin-top: 10%">
+                <span class="glyphicon"></span>Деталі
+            </a>
+
+            <a href="@Url.Action("Create", "Bouquets", new { id = b.Id })"
+               class="btn btn-primary btn-lg pull-right" style="margin-top: 10%; margin-right: 10%">
+                <span class="glyphicon"></span>Create
+            </a>
+        </div>
+
+
+        <div class="col-sm-4 col-xs-12 pull-right">
+            <a id="btn_add" href="@Url.Action("AddBouquet", "ShoppingCart", new { id=b.Id })"
+               class="btn btn-info btn-lg pull-right" style="margin-top:10%">
+                <span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart
+            </a>
+        </div>
     </div>
 
-    if (Request.IsAuthenticated && User.IsInRole("Admin"))
-    {
-        <li>@Html.ActionLink("Create New", "Create", new { id = b.Id })</li>
-        <li>@Html.ActionLink("Edit", "Edit", new { id = b.Id }) </li>
-        <li>@Html.ActionLink("Details", "Details", new { id = b.Id })</li>
-        <li>@Html.ActionLink("Delete", "Delete", new { id = b.Id })</li>
-        
-        
-        }
+    @*
+        if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {*@
+    <li>@Html.ActionLink("Create New", "Create", new { id = b.Id })</li>
+    <li>@Html.ActionLink("Edit", "Edit", new { id = b.Id }) </li>
+    <li>@Html.ActionLink("Delete", "Delete", new { id = b.Id })</li>
+@*}*@
 
-    
 }
 
 

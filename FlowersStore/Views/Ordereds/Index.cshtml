@@ -1,0 +1,69 @@
+﻿@model IEnumerable<FlowersStore.Models.Ordered>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Bouquet.Bouquet_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flower.Flower_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order.Customer_city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit_priceFlower)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit_priceBouquet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flower_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bouquet_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bouquet.Bouquet_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Flower.Flower_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order.Customer_city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit_priceFlower)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit_priceBouquet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Flower_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bouquet_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
